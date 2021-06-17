@@ -2451,7 +2451,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Tests
                 new KeyValuePair<string, string>(HeaderNames.Authority, "localhost:80"),
             }, endStream: true);
 
-            await requestStream.WaitForStreamErrorAsync(Http3ErrorCode.InternalError, "Total header size exceeds the maximum size allowed by peer.");
+            await requestStream.WaitForStreamErrorAsync(Http3ErrorCode.InternalError, "The encoded HTTP headers length exceeds the limit specified by the peer of 100 bytes.");
         }
     }
 }

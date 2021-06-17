@@ -62,7 +62,10 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http3
             _headerEncodingBuffer = new byte[_maxFrameSize];
             _qpackEncoder = new QPackEncoder();
 
-            // TODO(JamesNK): QPack encoder doesn't react to settings change during a stream
+            // Note that QPack encoder doesn't react to settings change during a stream.
+            // Unlikely to be a problem in practice:
+            // - Settings rarely change after the start of a connection.
+            // - Response header size limits are a best-effort requirement in the spec.
             _qpackEncoder.MaxTotalHeaderSize = clientPeerSettings.MaxRequestHeaderFieldSectionSize > int.MaxValue
                 ? int.MaxValue
                 : (int)clientPeerSettings.MaxRequestHeaderFieldSectionSize;

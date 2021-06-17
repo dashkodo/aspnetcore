@@ -469,10 +469,11 @@ namespace System.Net.Http.QPack
                     return false;
                 }
 
+                // https://quicwg.org/base-drafts/draft-ietf-quic-http.html#section-4.1.1.3
                 _currentTotalHeaderSize += HeaderField.GetLength(key.Length, value.Length);
                 if (_currentTotalHeaderSize > MaxTotalHeaderSize)
                 {
-                    throw new QPackEncodingException("Total header size exceeds the maximum size allowed by peer.");
+                    throw new QPackEncodingException($"The encoded HTTP headers length exceeds the limit specified by the peer of {MaxTotalHeaderSize} bytes.");
                 }
 
                 length += headerLength;
